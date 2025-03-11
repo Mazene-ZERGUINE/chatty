@@ -18,11 +18,14 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     // Enforce return type in functions
-    '@typescript-eslint/explicit-function-return-type': ['error', {
-      allowExpressions: false,
-      allowTypedFunctionExpressions: false,
-      allowHigherOrderFunctions: false,
-    }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: false,
+        allowTypedFunctionExpressions: false,
+        allowHigherOrderFunctions: false,
+      },
+    ],
 
     // Enforce explicit return types for modules
     '@typescript-eslint/explicit-module-boundary-types': 'error',
@@ -40,7 +43,10 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': 'error',
 
     // Disallow empty functions unless they have a specific reason
-    '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions', 'methods'] }],
+    '@typescript-eslint/no-empty-function': [
+      'error',
+      { allow: ['arrowFunctions', 'methods'] },
+    ],
 
     // Enforce consistent member ordering in classes/interfaces
     '@typescript-eslint/member-ordering': [
@@ -56,9 +62,9 @@ module.exports = {
           'constructor',
           'public-instance-method',
           'protected-instance-method',
-          'private-instance-method'
-        ]
-      }
+          'private-instance-method',
+        ],
+      },
     ],
 
     // Require using Error objects when throwing exceptions
@@ -69,16 +75,6 @@ module.exports = {
 
     // Disallow promise rejections with non-Error values
     '@typescript-eslint/no-redundant-type-constituents': 'error',
-
-    // Enforce consistent import order
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      }
-    ],
 
     // Disallow fallthrough in switch cases
     'no-fallthrough': 'error',

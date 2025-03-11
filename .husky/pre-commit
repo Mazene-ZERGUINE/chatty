@@ -1,8 +1,10 @@
 # Run linting only on changed files/projects
 if git diff --cached --name-only | grep -q "frontend/"; then
+  npm run lint:frontend:fix
   npm run lint:frontend
 fi
 
 if git diff --cached --name-only | grep -q "backend/"; then
-  npm run lint:backend
+ npm run lint:backend:fix
+ npm run lint:backend:check
 fi

@@ -1,12 +1,21 @@
 module.exports = {
-  root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parserOptions: {
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
-    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'plugin:prettier/recommended',
   ],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
+  ignorePatterns: ['.eslintrc.js'],
   rules: {
     // Enforce return type in functions
     '@typescript-eslint/explicit-function-return-type': ['error', {
@@ -61,15 +70,6 @@ module.exports = {
     // Disallow promise rejections with non-Error values
     '@typescript-eslint/no-redundant-type-constituents': 'error',
 
-    // Enforce consistent import order
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      }
-    ],
 
     // Disallow fallthrough in switch cases
     'no-fallthrough': 'error',
@@ -91,6 +91,5 @@ module.exports = {
 
     // Enforce consistent spacing around operators
     'space-infix-ops': 'error',
-
-  }
+  },
 };

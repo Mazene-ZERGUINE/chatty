@@ -8,8 +8,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:frontend": "cd frontend && npm run lint",
-    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint:check",
+    "lint:backend": "cd backend && npm run lint:check",
+    "lint:backend:fix": "cd backend && npm run lint:fix",
+    "lint:frontend:fix": "cd frontend && npm run lint:fix",
     "prepare": "husky"
   }
 }
