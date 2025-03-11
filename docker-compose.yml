@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16
+    container_name: chatty-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: chatty
+      POSTGRES_PASSWORD: chatty
+      POSTGRES_DB: chatty_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chat_network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:6
+    container_name: chatty-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: chatty
+      MONGO_INITDB_ROOT_PASSWORD: chatty
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - chat_network
+
+  # MongoDB Admin Interface (Optional)
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - chat_network
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+networks:
+  chat_network:
+    driver: bridge
