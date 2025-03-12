@@ -1,10 +1,10 @@
 export class PhoneNumber {
   constructor(
     private readonly countryCode: string,
-    private readonly number: number,
+    private readonly number: string,
   ) {}
 
-  static create(countryCode: string, number: number): PhoneNumber {
+  static create(countryCode: string, number: string): PhoneNumber {
     if (!countryCode || !number) {
       throw new Error('Invalid phone number');
     }

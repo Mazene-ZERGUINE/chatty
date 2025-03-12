@@ -34,8 +34,7 @@ export class AuthService {
 
   private async checkUserExists(user: UserCreateDto): Promise<boolean> {
     return (
-      (await this.usersRepository.findOneBy({ email: user.email })) !==
-      undefined
+      (await this.usersRepository.findOneBy({ email: user.email })) !== null
     );
   }
 }

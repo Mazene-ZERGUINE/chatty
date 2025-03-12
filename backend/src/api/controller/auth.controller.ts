@@ -1,4 +1,4 @@
-import { Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from '../../application/service/auth.service';
 import { UserCreateDto } from '../../application/dto/request/user-create.dto';
 
@@ -8,7 +8,7 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async register(user: UserCreateDto): Promise<void> {
+  async register(@Body() user: UserCreateDto): Promise<void> {
     await this.authService.register(user);
   }
 }
