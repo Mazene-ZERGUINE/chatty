@@ -1,8 +1,8 @@
 <div
   class="auth-form md:w-[550px] w-[430px] h-auto bg-white/40 backdrop-blur-md rounded-lg shadow-xl p-8">
   <div class="flex flex-col items-center">
-    <form class="w-full">
-      <p class="text-center  text-2xl text-blue-500 font-bold mb-4">
+    <form class="w-full" [formGroup]="registerFrom" appFormGroupValidation>
+      <p class="text-center text-2xl text-blue-500 font-bold mb-4">
         Create A New Account
       </p>
 
@@ -12,15 +12,20 @@
         <label class="text-sm text-darkMain font-bold mb-2">First Name</label>
         <div class="flex flex-row">
           <input
+            formControlName="firstName"
             placeholder="example: Arthur"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-darkMain placeholder-gray-400 focus:outline-none focus:ring-2"
           />
           <svg
-            class="w-9 p-1 fixed left-[86%] text-darkMain">
-          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            class="w-9 p-1 fixed left-[86%] text-darkMain"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path>
           </svg>
+        </div>
+        <div *ngIf="registerFrom.get('firstName')?.invalid && (registerFrom.get('firstName')?.dirty || registerFrom.get('firstName')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          First name is required
         </div>
       </div>
 
@@ -28,35 +33,49 @@
         <label class="text-sm text-darkMain font-bold mb-2">Last Name</label>
         <div class="flex flex-row">
           <input
+            formControlName="lastName"
             placeholder="example: Morgen"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-darkMain placeholder-gray-400 focus:outline-none focus:ring-2"
           />
           <svg
-            class="w-9 p-1 fixed left-[86%] text-darkMain">
+            class="w-9 p-1 fixed left-[86%] text-darkMain"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path>
           </svg>
+        </div>
+        <div *ngIf="registerFrom.get('lastName')?.invalid && (registerFrom.get('lastName')?.dirty || registerFrom.get('lastName')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          Last name is required
         </div>
       </div>
 
       <div class="flex flex-col w-full mb-4">
         <label class="text-sm text-darkMain font-bold mb-2">Phone number</label>
         <div class="flex-row flex space-x-3">
-          <select
-            type="password"
-            class=" bg-white/20 backdrop-blur-sm text-gray-400 w-2/12 p-2 rounded-md  placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
-          >
-            <option>+33</option>
-          </select>
           <input
+            placeholder="+33"
+            formControlName="countryCode"
+            class="bg-white/20 backdrop-blur-sm text-gray-400 w-2/12 p-2 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2"
+          />
+          <input
+            formControlName="phoneNumber"
             placeholder="07 77 77 77 77"
-            type="password"
-            class="w-10/12 bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-10/12 bg-white/20 backdrop-blur-sm p-2 rounded-md text-darkMain placeholder-gray-400 focus:outline-none focus:ring-2"
           />
         </div>
+        <div *ngIf="registerFrom.get('countryCode')?.invalid && (registerFrom.get('countryCode')?.dirty || registerFrom.get('countryCode')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          Country code is required
+        </div>
+        <div *ngIf="registerFrom.get('phoneNumber')?.invalid && (registerFrom.get('phoneNumber')?.dirty || registerFrom.get('phoneNumber')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          <span *ngIf="registerFrom.get('phoneNumber')?.hasError('required')">Phone number is required</span>
+          <span *ngIf="registerFrom.get('phoneNumber')?.hasError('pattern')">Phone number must contain only digits</span>
+          <span *ngIf="registerFrom.get('phoneNumber')?.hasError('maxlength')">Phone number cannot exceed 10 digits</span>
+        </div>
         <svg
-          class="w-9 p-1 fixed left-[86%] top-[50%]  text-darkMain"
+          class="w-9 p-1 fixed left-[86%] top-[50%] text-darkMain"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
           <path
             d="M21 16.42V19.9561C21 20.4811 20.5941 20.9167 20.0705 20.9537C19.6331 20.9846 19.2763 21 19 21C10.1634 21 3 13.8366 3 5C3 4.72371 3.01545 4.36687 3.04635 3.9295C3.08337 3.40588 3.51894 3 4.04386 3H7.5801C7.83678 3 8.05176 3.19442 8.07753 3.4498C8.10067 3.67907 8.12218 3.86314 8.14207 4.00202C8.34435 5.41472 8.75753 6.75936 9.3487 8.00303C9.44359 8.20265 9.38171 8.44159 9.20185 8.57006L7.04355 10.1118C8.35752 13.1811 10.8189 15.6425 13.8882 16.9565L15.4271 14.8019C15.5572 14.6199 15.799 14.5573 16.001 14.6532C17.2446 15.2439 18.5891 15.6566 20.0016 15.8584C20.1396 15.8782 20.3225 15.8995 20.5502 15.9225C20.8056 15.9483 21 16.1633 21 16.42Z"></path>
@@ -67,9 +86,10 @@
         <label class="text-sm text-darkMain font-bold mb-2">Email</label>
         <div class="flex flex-row">
           <input
+            formControlName="email"
             placeholder="your-adress@email.com"
             type="text"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-darkMain placeholder-gray-400 focus:outline-none focus:ring-2"
           />
           <svg
             class="w-9 p-1 fixed left-[86%] text-darkMain"
@@ -78,15 +98,21 @@
               d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM12.0606 11.6829L5.64722 6.2377L4.35278 7.7623L12.0731 14.3171L19.6544 7.75616L18.3456 6.24384L12.0606 11.6829Z"></path>
           </svg>
         </div>
+        <div *ngIf="registerFrom.get('email')?.invalid && (registerFrom.get('email')?.dirty || registerFrom.get('email')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          <span *ngIf="registerFrom.get('email')?.hasError('required')">Email is required</span>
+          <span *ngIf="registerFrom.get('email')?.hasError('email')">Please enter a valid email address</span>
+        </div>
       </div>
 
       <div class="flex flex-col w-full mb-4">
         <label class="text-sm text-darkMain font-bold mb-2">Password</label>
         <div class="flex flex-row">
           <input
+            formControlName="password"
             placeholder="**********"
             type="password"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-darkMain placeholder-gray-400 focus:outline-none focus:ring-2"
           />
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                class="w-9 p-1 fixed left-[86%] text-darkMain">
@@ -94,20 +120,25 @@
               d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"></path>
           </svg>
         </div>
+        <div *ngIf="registerFrom.get('password')?.invalid && (registerFrom.get('password')?.dirty || registerFrom.get('password')?.touched)"
+             class="text-red-500 text-xs mt-1">
+          Password is required
+        </div>
       </div>
 
-
       <button
-        class="w-full mb-3 text-white font-bold py-3 rounded-md transition bg-blue-400">
+        [ngClass]="{'bg-gray-400 cursor-not-allowed': registerFrom.invalid, 'bg-blue-500 hover:bg-blue-600': !registerFrom.invalid}"
+        [disabled]="registerFrom.invalid"
+        (click)="onRegisterClick()"
+        class="w-full mb-3 text-white font-bold py-3 rounded-md transition">
         Sign Up
       </button>
 
-
       <div class="text-center">
-        <p class=" text-md  text-darkMain">You already have an account ?</p>
+        <p class="text-md text-darkMain">You already have an account?</p>
         <a
           (click)="onChangeScreenClick()"
-          class="text-sm text-blue-500  font-semibold hover:underline cursor-pointer "
+          class="text-sm text-blue-500 font-semibold hover:underline cursor-pointer"
         >
           Login
         </a>
