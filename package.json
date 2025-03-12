@@ -13,5 +13,8 @@
     "lint:backend:fix": "cd backend && npm run lint:fix",
     "lint:frontend:fix": "cd frontend && npm run lint:fix",
     "prepare": "husky"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1"
   }
 }

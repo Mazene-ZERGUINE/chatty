@@ -24,7 +24,7 @@ module.exports = {
       allowHigherOrderFunctions: false,
     }],
 
-    // Enforce explicit return types for modules
+    // Enforce explicit return vo for modules
     '@typescript-eslint/explicit-module-boundary-types': 'error',
 
     // Disallow any usage
