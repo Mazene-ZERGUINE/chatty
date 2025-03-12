@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { createTypeOrmConfig } from './infrastructure/database/typeorm.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { createMongooseConfig } from './infrastructure/database/mongoos.config';
+import { AuthController } from './api/controller/auth.controller';
+import { AuthService } from './application/service/auth.service';
+import { UserEntity } from './domain/entity/user.entity';
 
 @Module({
   imports: [
@@ -18,6 +21,7 @@ import { createMongooseConfig } from './infrastructure/database/mongoos.config';
       inject: [ConfigService],
       useFactory: createTypeOrmConfig,
     }),
+    TypeOrmModule.forFeature([UserEntity]),
     // MongoDb configurations
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -25,7 +29,7 @@ import { createMongooseConfig } from './infrastructure/database/mongoos.config';
       useFactory: createMongooseConfig,
     }),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AuthController],
+  providers: [AuthService],
 })
 export class AppModule {}
