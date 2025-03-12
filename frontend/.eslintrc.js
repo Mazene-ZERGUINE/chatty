@@ -92,7 +92,7 @@ module.exports = {
     'max-params': ['error', 4],
 
     // Prevent long lines
-    'max-len': ['error', { code: 100, ignoreComments: true }],
+    'max-len': ['error', { code: 120, ignoreComments: true }],
 
     // Enforce consistent spacing around operators
     'space-infix-ops': 'error',
