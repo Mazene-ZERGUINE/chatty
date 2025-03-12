@@ -1,0 +1,29 @@
+@keyframes fadeIn {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.auth-form {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.auth-form-hidden {
+  animation: fadeOut 1s ease-in-out forwards;
+}

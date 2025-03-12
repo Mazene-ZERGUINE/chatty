@@ -1,0 +1,70 @@
+<div
+  class="auth-form md:w-[550px] w-[430px] h-auto bg-white/40 backdrop-blur-md rounded-lg shadow-xl p-8">
+  <div class="flex flex-col items-center">
+    <form class="w-full">
+      <p class="text-center text-2xl text-blue-500 font-bold mb-4">
+        Welcome Back!
+      </p>
+
+      <p class="mb-8 text-center text-sm text-gray-400">
+        Sign in to continue your conversation on Chatty! 🎙️
+      </p>
+
+      <!-- Email -->
+      <div class="flex flex-col w-full mb-6">
+        <label class="text-sm text-darkMain font-bold mb-2">Email</label>
+        <div class="flex flex-row">
+          <input
+            placeholder="your-adress@email.com"
+            type="email"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+          />
+          <svg
+            class="w-9 p-1 fixed left-[86%] text-darkMain"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2 3 3 3ZM12.0606 11.6829L5.64722 6.2377L4.35278 7.7623L12.0731 14.3171L19.6544 7.75616L18.3456 6.24384L12.0606 11.6829Z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col w-full mb-4">
+        <label class="text-sm text-darkMain font-bold mb-2">Password</label>
+        <div class="flex flex-row">
+          <input
+            placeholder="**********"
+            type="password"
+            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+          />
+          <svg
+            class="w-9 p-1 fixed left-[86%] text-darkMain"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="text-right mb-6">
+        <a href="#" class="text-sm text-blue-500 font-semibold hover:underline cursor-pointer">
+          Forgot password?
+        </a>
+      </div>
+
+      <!-- Login Button -->
+      <button class="w-full mb-3 text-white font-bold py-3 rounded-md transition bg-blue-400">
+        Log In
+      </button>
+
+      <!-- Switch to Sign Up -->
+      <div class="text-center">
+        <p class="text-md text-darkMain">Don't have an account?</p>
+        <a (click)="onChangeScreenClick()" class="text-sm text-blue-500 font-semibold hover:underline cursor-pointer">
+          Sign Up
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

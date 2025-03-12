@@ -15,14 +15,14 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.mjs'],
+  ignorePatterns: ['.eslintrc.js'],
   rules: {
     // Enforce return type in functions
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {
-        allowExpressions: false,
-        allowTypedFunctionExpressions: false,
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
         allowHigherOrderFunctions: false,
       },
     ],
