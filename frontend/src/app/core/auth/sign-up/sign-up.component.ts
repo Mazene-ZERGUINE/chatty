@@ -19,6 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 //
 import { FormGroupValidationDirective } from '../../../shared/directives/form-group-validation.directive';
 import { NgClass, NgIf } from '@angular/common';
+import { NotifierService } from '../../services/notifier.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -46,12 +47,15 @@ export class SignUpComponent {
 
   private readonly authService: AuthService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly notifier = inject(NotifierService);
 
   constructor() {
     effect(() => {
       if (this.authService.registerSuccess()) {
-        // TODO: Display a toast
-        alert('Register successfully!');
+        this.notifier.showSuccessMessage(
+          'Your account has been created',
+          'Registration',
+        );
         this.changeScreenSignal.set(AuthScreens.SIGN_IN);
         this.authService.registerSuccess.set(false);
       }
