@@ -15,6 +15,6 @@ export enum AuthScreens {
   styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
-  screenSignal: WritableSignal<AuthScreens> = signal(AuthScreens.SIGN_UP);
+  screenSignal: WritableSignal<AuthScreens> = signal(AuthScreens.SIGN_IN);
   protected readonly AuthScreens = AuthScreens;
 }

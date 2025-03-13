@@ -3,6 +3,7 @@ import {
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
+  HttpStatusCode,
 } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { inject } from '@angular/core';
@@ -17,7 +18,12 @@ export const HttpErrorInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       console.log(error);
       const errorMessage = error.error.error.message;
-      notifier.showErrorMessage(errorMessage, 'Error occurred !');
+      if (
+        error.status !== HttpStatusCode.Forbidden &&
+        error.status !== HttpStatusCode.Unauthorized
+      ) {
+        notifier.showErrorMessage(errorMessage, 'Error occurred !');
+      }
       return throwError(() => error);
     }),
   );

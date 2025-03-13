@@ -1,7 +1,7 @@
 <div
   class="auth-form md:w-[550px] w-[430px] h-auto bg-white/40 backdrop-blur-md rounded-lg shadow-xl p-8">
   <div class="flex flex-col items-center">
-    <form class="w-full">
+    <form [formGroup]="loginForm" class="w-full" appFormGroupValidation>
       <p class="text-center text-2xl text-blue-500 font-bold mb-4">
         Welcome Back!
       </p>
@@ -15,9 +15,10 @@
         <label class="text-sm text-darkMain font-bold mb-2">Email</label>
         <div class="flex flex-row">
           <input
+            formControlName="email"
             placeholder="your-adress@email.com"
             type="email"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full text-darkMain bg-white/20 backdrop-blur-sm p-2 rounded-md  placeholder-gray-400 focus:outline-none focus:ring-2 "
           />
           <svg
             class="w-9 p-1 fixed left-[86%] text-darkMain"
@@ -33,9 +34,10 @@
         <label class="text-sm text-darkMain font-bold mb-2">Password</label>
         <div class="flex flex-row">
           <input
+            formControlName="password"
             placeholder="**********"
             type="password"
-            class="w-full bg-white/20 backdrop-blur-sm p-2 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F13024]"
+            class="w-full text-darkMain bg-white/20 backdrop-blur-sm p-2 rounded-md  placeholder-gray-400 focus:outline-none focus:ring-2 "
           />
           <svg
             class="w-9 p-1 fixed left-[86%] text-darkMain"
@@ -46,15 +48,17 @@
         </div>
       </div>
 
-      <!-- Forgot Password -->
       <div class="text-right mb-6">
         <a href="#" class="text-sm text-blue-500 font-semibold hover:underline cursor-pointer">
           Forgot password?
         </a>
       </div>
 
-      <!-- Login Button -->
-      <button class="w-full mb-3 text-white font-bold py-3 rounded-md transition bg-blue-400">
+      <button
+        [ngClass]="{'bg-gray-400 cursor-not-allowed': loginForm.invalid}"
+        [disabled]="loginForm.invalid"
+        (click)="onLoginClick()"
+        class="w-full mb-3 text-white font-bold py-3 rounded-md transition bg-blue-400">
         Log In
       </button>
 
