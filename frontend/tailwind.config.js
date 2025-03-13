@@ -9,6 +9,9 @@ export default {
         bgDarkSecondary: '#352F44',
         highlightDark: '#DBD8E3',
         highlightDarkSecondary: '#5C5470',
+
+        bgLightSecondary: '#e4e5f1',
+        bgLightPrimary: '#fafafa',
       },
       textColor: {
         darkMain: '#1F1D1D',
