@@ -14,7 +14,7 @@ async function bootstrap(): Promise<void> {
 
   // App configurations
   app.setGlobalPrefix('api/v1/');
-  app.use(cookieParser);
+  app.use(cookieParser());
   app.enableCors(createCorsConfig(configService));
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
   app.useGlobalFilters(new GlobalExceptionHandler());

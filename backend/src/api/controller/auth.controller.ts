@@ -33,15 +33,17 @@ export class AuthController {
     @Res() response: Response,
   ): Promise<void> {
     await this.authService.login(loginDto, response);
+    response.status(HttpStatus.OK).send();
   }
 
-  @Get('refresh/:id')
+  @Get('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(
     @Res() response: Response,
     @Req() request: Request,
   ): Promise<void> {
     await this.authService.refreshToken(request, response);
+    response.status(HttpStatus.OK).send();
   }
 
   @Get('logout')
