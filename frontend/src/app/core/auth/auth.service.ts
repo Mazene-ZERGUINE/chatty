@@ -3,6 +3,7 @@ import { ApiService } from '../services/api.service';
 import { UserRegister } from './models/user-register.model';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 import { UserLogin } from './models/user-login.model';
+import { User } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,8 @@ export class AuthService {
   registerSuccess: WritableSignal<boolean> = signal(false);
   loginSuccess: WritableSignal<boolean> = signal(false);
   isAuthenticated: WritableSignal<boolean> = signal(false);
+
+  userInformation: WritableSignal<User | null> = signal(null);
 
   private readonly apiService: ApiService = inject(ApiService);
 
@@ -39,6 +42,12 @@ export class AuthService {
         return of(false);
       }),
     );
+  }
+
+  getUserInformation$(): Observable<User> {
+    return this.apiService
+      .getRequest<User>('auth/me')
+      .pipe(tap((user: User) => this.userInformation.set(user)));
   }
 
   checkAuthStatus(): Observable<boolean> {
