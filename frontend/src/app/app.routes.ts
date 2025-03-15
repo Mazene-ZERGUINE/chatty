@@ -18,4 +18,12 @@ export const routes: Routes = [
       import('./features/home/home.component').then((m) => m.HomeComponent),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'community',
+    loadComponent: () =>
+      import('./features/community/community.component').then(
+        (m) => m.CommunityComponent,
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
