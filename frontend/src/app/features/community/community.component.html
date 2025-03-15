@@ -1,0 +1,35 @@
+<div class="w-screen h-screen flex overflow-hidden">
+  <app-side-bar-menu />
+  <div class="flex flex-row w-full h-full">
+    <app-messages-list />
+
+    <div class="flex flex-col w-full h-full">
+      <app-top-bar />
+
+      <div class="h-screen w-full bg-gray-100">
+        <div class="h-full w-full p-8 overflow-y-auto">
+          <div class="">
+            <p class="text-darkMain font-bold text-2xl mb-4">Suggested for you</p>
+          </div>
+
+          <div class="w-full mb-4">
+            <app-search-bar />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @for (user of users(); track user)
+            {
+              <app-user-card
+                [username]="user.firstName + ' ' + user.lastName"
+                [email]="user.email"
+                [phone]="user.phoneNumber"
+                [bio]="user.bio"
+                [avatarUrl]="user.avatarUrl"
+              />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

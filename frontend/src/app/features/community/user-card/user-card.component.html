@@ -1,0 +1,18 @@
+<div class="bg-bgLightSecondary shadow-lg rounded-lg p-5 w-72 text-center h-[320px]">
+  <div class="flex justify-center">
+    <img [src]="avatarUrl()" alt="Profile Picture" class="w-20 h-20 rounded-full border-2 border-blue-500">
+  </div>
+
+  <h2 class="text-2xl  mt-3 text-darkMain font-bold">{{ username() }}</h2>
+  <p class="text-sm text-darkMain">{{ email() }}</p>
+  <p class="text-sm text-gray-400 mt-2">{{ phone() }}</p>
+  <p class="text-sm text-gray-400 text-ellipsis">{{ bio() }}</p>
+
+
+  <div class="mt-4 flex justify-center gap-3">
+
+    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+      Send request
+    </button>
+  </div>
+</div>
