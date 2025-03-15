@@ -16,6 +16,7 @@ import { LoginDto } from '../dto/request/login.dto';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from '../../infrastructure/security/jwt/token.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly tokenService: TokenService,
+    private readonly userService: UserService,
   ) {
     new HashUtils(this.configService);
   }
@@ -93,6 +95,16 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token', error);
     }
+  }
+
+  async getUserData(token: string): Promise<UserEntity> {
+    if (!token) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    const decodedToken = this.jwtService.verify(token, {
+      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+    });
+    return this.userService.findEntity(decodedToken.userId);
   }
 
   async logout(response: Response): Promise<void> {

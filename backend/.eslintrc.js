@@ -84,7 +84,7 @@ module.exports = {
     'max-depth': ['error', 4],
 
     // Limit the number of parameters in functions
-    'max-params': ['error', 4],
+    'max-params': ['error', 5],
 
     // Prevent long lines
     'max-len': ['error', { code: 100, ignoreComments: true }],

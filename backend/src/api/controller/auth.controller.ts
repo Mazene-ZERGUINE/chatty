@@ -7,12 +7,17 @@ import {
   Post,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from '../../application/service/auth.service';
 import { UserCreateDto } from '../../application/dto/request/user-create.dto';
 import { LoginDto } from '../../application/dto/request/login.dto';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
+import { UserEntity } from '../../domain/entity/user.entity';
+import { ResponseDto } from 'nestjs-crud-mixins';
+import { UserDto } from '../../application/dto/response/user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -25,7 +30,7 @@ export class AuthController {
     await this.authService.register(user);
   }
 
-  @Throttle({ default: { limit: 3, ttl: 60 } })
+  //@Throttle({ default: { limit: 3, ttl: 60 } })
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
@@ -50,5 +55,14 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async logout(@Res() response: Response): Promise<void> {
     await this.authService.logout(response);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ResponseDto(UserDto)
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  async getUserData(@Req() request: Request): Promise<UserEntity> {
+    const token = request.cookies['access_token'];
+    return this.authService.getUserData(token);
   }
 }

@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { MixinsCrudEntity } from 'nestjs-crud-mixins';
+import { GroupEntity } from './group.entity';
 
 @Entity('users')
 export class UserEntity extends MixinsCrudEntity {
@@ -30,5 +31,9 @@ export class UserEntity extends MixinsCrudEntity {
   @Column({ type: 'varchar', nullable: true, default: null, length: 255 })
   avatarUrl: string;
 
-  // TODO: Add account profile configurations, Contacts, Friend Requests, Notifications and Chat groups //
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  @ManyToMany(() => GroupEntity, (group) => group.members)
+  groups: GroupEntity[];
+
+  // TODO: Add account profile configurations, Contacts, Friend Requests, Notifications and //
 }
