@@ -10,26 +10,64 @@
         <div class="h-full w-full p-8">
           <div class="">
             <p class="text-darkMain font-bold text-2xl mb-4">Suggested for you</p>
+
+            <div class="flex flex-row bg-gray-300 rounded-full space-x-3 w-fit mb-2 p-1">
+              <p
+                [ngClass]="{'bg-bgLightSecondary text-white font-bold transition-all duration-300': currentScreen === 'users'}"
+                (click)="onScreenChange('users')"
+                class="p-2 text-sm rounded-ful rounded-full l cursor-pointer transition-all duration-300"
+              >Contacts</p>
+
+              <p
+                [ngClass]="{'bg-bgLightSecondary text-white font-bold transition-all duration-300': currentScreen === 'groups'}"
+                (click)="onScreenChange('groups')"
+                class="p-2 text-sm rounded-full cursor-pointer transition-all duration-300"
+              >Groups</p>
+            </div>
+
+
           </div>
 
           <div class="w-full mb-4">
             <app-search-bar (searchChange)="filterUsers($event)" />
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 h-[80%] overflow-y-auto">
-            @for (user of users(); track user)
-            {
-              <app-user-card
-                [username]="user.firstName + ' ' + user.lastName"
-                [email]="user.email"
-                [phone]="user.phoneNumber"
-                [bio]="user.bio"
-                [avatarUrl]="user.avatarUrl"
-              />
-            }
-          </div>
+          @if (currentScreen === 'users') {
+            <div
+              [ngClass]="displayInfoScreen ? 'lg:grid-cols-3' : 'lg:grid-cols-4'"
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-[80%] overflow-y-auto">
+              @for (user of users(); track user) {
+                <app-user-card
+                  (sendRequest)="sendFriendRequest($event)"
+                  [id]="user.id"
+                  [username]="user.firstName + ' ' + user.lastName"
+                  [email]="user.email"
+                  [phone]="user.phoneNumber"
+                  [bio]="user.bio"
+                  [avatarUrl]="user.avatarUrl"
+                  (userSelect)="displayUserInfo($event)"
+                  [isRequestSent]="isRequestSent(user.id)"
+                />
+              }
+            </div>
+          } @else {
+            <p>Groups screen</p>
+          }
         </div>
+
       </div>
     </div>
+    @if (displayInfoScreen) {
+      <div
+        class=" h-full bg-bgLightSecondary flex flex-col shadow-lg w-5/12
+         transition-all duration-500 ease-in-out
+         transform"
+        [ngClass]="{
+    '-translate-x-full opacity-0': !displayInfoScreen,
+    'translate-x-0 opacity-100': displayInfoScreen
+    }"
+      >
+        <app-user-info-card (closeEvent)="closeDisplayScreen()" [userId]="selectedUserId" />
+      </div>
+    }
   </div>
 </div>

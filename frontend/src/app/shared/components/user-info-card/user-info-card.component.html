@@ -1,0 +1,87 @@
+<div class="w-full h-full bg-bgLightSecondary flex flex-col">
+  <div class="flex flex-row justify-between p-7 border-b border-l border-b-1 border-gray-300">
+    <p class="text-gray-500 font-bold">Contact information</p>
+
+    <svg
+      (click)="onCloseClick()"
+      class="h-6 cursor-pointer text-gray-500"
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>
+    </svg>
+  </div>
+
+  <div class="h-fit w-full flex justify-center pt-12">
+    <div class="rounded-full h-44 w-44 flex justify-center">
+      <img [src]="user()?.avatarUrl" class="rounded-full w-fit">
+    </div>
+  </div>
+
+  <div>
+    <p class="text-darkMain font-bold text-center text-3xl pt-2">{{ user()?.firstName + ' ' + user()?.lastName }}</p>
+  </div>
+
+  <div>
+    <p class="text-gray-400 font-semibold text-center text-md pt-2">{{user()?.email}}</p>
+  </div>
+
+  <div>
+    <p class="text-gray-400 font-semibold text-center text-md ">{{user()?.phoneNumber}}</p>
+  </div>
+
+  <div class="border-b border-b-1 border-gray-300 mt-8"></div>
+
+  <div>
+    <p class="text-md text-darkMain font-semibold p-4">About</p>
+    <p class="text-gray-400 text-sm px-4">{{user()?.bio}}</p>
+  </div>
+
+
+  <div class="border-b border-b-1 border-gray-300 mt-8"></div>
+
+  <div class="max-h-[18%]">
+    <p class="text-md text-darkMain font-semibold p-4">5 common friends with {{user()?.lastName}} </p>
+
+    <div class="flex flex-row space-x-3 px-4">
+        <div class="rounded-full h-12 w-12">
+          <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+        </div>
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-b border-b-1 border-gray-300 mt-8"></div>
+
+  <div class="max-h-[18%]">
+    <p class="text-md text-darkMain font-semibold p-4">2 common groups with {{user()?.lastName}} </p>
+
+    <div class="flex flex-row space-x-3 px-4">
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+      <div class="rounded-full h-12 w-12">
+        <img class="rounded-full h-fit w-fit" [src]="user()?.avatarUrl">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flex flex-row w-full p-4 space-x-3 top-[13%] relative">
+      <button class="p-2 bg-red-500 text-white font-bold rounded-md w-1/2">Block</button>
+      <button class="p-2 bg-gray-800 text-white font-bold rounded-md w-1/2">Send request</button>
+  </div>
+
+
+</div>
