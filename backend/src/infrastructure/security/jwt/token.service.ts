@@ -64,7 +64,7 @@ export class TokenService {
     });
   }
 
-  verifyRefreshToken(token: string): { userId: string; email: string } {
+  verifyRefreshToken(token: string): { userId: number; email: string } {
     return this.jwtService.verify(token, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
     });

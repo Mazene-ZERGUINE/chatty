@@ -1,11 +1,19 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { MixinsCrudEntity } from 'nestjs-crud-mixins';
 import { GroupEntity } from './group.entity';
+import { FriendRequestEntity } from './friend-request.entity';
 
 @Entity('users')
 export class UserEntity extends MixinsCrudEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('identity')
+  id: number;
 
   @Column({ type: 'varchar', length: 60, unique: true, nullable: false })
   email: string;
@@ -35,5 +43,20 @@ export class UserEntity extends MixinsCrudEntity {
   @ManyToMany(() => GroupEntity, (group) => group.members)
   groups: GroupEntity[];
 
-  // TODO: Add account profile configurations, Contacts, Friend Requests, Notifications and //
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  @OneToMany(() => FriendRequestEntity, (requests) => requests.sender)
+  sentRequests: FriendRequestEntity[];
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  @OneToMany(() => FriendRequestEntity, (requests) => requests.receiver)
+  receivedRequests: FriendRequestEntity[];
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  @ManyToMany(() => UserEntity, (user) => user.contacts)
+  @JoinTable({
+    name: 'user_contacts',
+    joinColumn: { name: 'userId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'contactId', referencedColumnName: 'id' },
+  })
+  contacts: UserEntity[];
 }

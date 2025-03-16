@@ -7,10 +7,9 @@ import { createMongooseConfig } from './infrastructure/database/mongoos.config';
 import { AuthController } from './api/controller/auth.controller';
 import { AuthService } from './application/service/auth.service';
 import { UserEntity } from './domain/entity/user.entity';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { createThrottler } from './infrastructure/web/throttler.config';
 import { JwtModule } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
 import { TokenService } from './infrastructure/security/jwt/token.service';
 import { UserController } from './api/controller/user.controller';
 import { UserService } from './application/service/user.service';
@@ -19,6 +18,9 @@ import { GroupService } from './application/service/group.service';
 import { GroupController } from './api/controller/group.controller';
 import { JwtStrategy } from './infrastructure/security/jwt/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { RelationsController } from './api/controller/relations.controller';
+import { RelationsService } from './application/service/relations.service';
+import { FriendRequestEntity } from './domain/entity/friend-request.entity';
 
 @Module({
   imports: [
@@ -33,7 +35,7 @@ import { PassportModule } from '@nestjs/passport';
       inject: [ConfigService],
       useFactory: createTypeOrmConfig,
     }),
-    TypeOrmModule.forFeature([UserEntity, GroupEntity]),
+    TypeOrmModule.forFeature([UserEntity, GroupEntity, FriendRequestEntity]),
     // MongoDb configurations
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -58,17 +60,19 @@ import { PassportModule } from '@nestjs/passport';
       }),
     }),
   ],
-  controllers: [AuthController, UserController, GroupController],
+  controllers: [
+    AuthController,
+    UserController,
+    GroupController,
+    RelationsController,
+  ],
   providers: [
+    RelationsService,
     GroupService,
     UserService,
     AuthService,
     TokenService,
     JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
   ],
 })
 export class AppModule {}
