@@ -7,16 +7,16 @@
       <app-top-bar />
 
       <div class="h-screen w-full bg-gray-100">
-        <div class="h-full w-full p-8 overflow-y-auto">
+        <div class="h-full w-full p-8">
           <div class="">
             <p class="text-darkMain font-bold text-2xl mb-4">Suggested for you</p>
           </div>
 
           <div class="w-full mb-4">
-            <app-search-bar />
+            <app-search-bar (searchChange)="filterUsers($event)" />
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 h-[80%] overflow-y-auto">
             @for (user of users(); track user)
             {
               <app-user-card

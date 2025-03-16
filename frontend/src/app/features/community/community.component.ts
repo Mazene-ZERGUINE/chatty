@@ -26,13 +26,19 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
 })
 export class CommunityComponent implements OnInit {
   readonly communityService = inject(CommunityService);
-  protected users = this.communityService.usersList;
+  protected users = this.communityService.filteredUsers;
   protected groups = this.communityService.groupsList;
+
+  protected readonly event = event;
 
   private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  filterUsers(searchValue: string): void {
+    this.communityService.setSearchValue(searchValue);
   }
 
   private loadData(): void {
