@@ -23,6 +23,12 @@
                 (click)="onScreenChange('groups')"
                 class="p-2 text-sm rounded-full cursor-pointer transition-all duration-300"
               >Groups</p>
+
+              <p
+                [ngClass]="{'bg-bgLightSecondary text-white font-bold transition-all duration-300': currentScreen === 'requests'}"
+                (click)="onScreenChange('requests')"
+                class="p-2 text-sm rounded-full cursor-pointer transition-all duration-300"
+              >Friend requests</p>
             </div>
 
 
@@ -49,8 +55,10 @@
                 />
               }
             </div>
-          } @else {
+          } @else if(currentScreen === 'groups') {
             <p>Groups screen</p>
+          } @else {
+            <p>Requests screen</p>
           }
         </div>
 

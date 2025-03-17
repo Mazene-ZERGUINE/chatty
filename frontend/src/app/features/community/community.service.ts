@@ -11,11 +11,14 @@ import { Observable, tap } from 'rxjs';
 import { Group } from '../../core/models/group.interface';
 import { User } from '../../core/models/user.interface';
 import { FriendRequest } from '../../core/models/friend-request.interface';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommunityService {
+  authService = inject(AuthService);
+
   groupsList: WritableSignal<Group[]> = signal([]);
   usersList: WritableSignal<User[]> = signal([]);
   searchValue: WritableSignal<string> = signal<string>('');
@@ -65,8 +68,15 @@ export class CommunityService {
   }
 
   getSentRequests(): Observable<FriendRequest[]> {
-    return this.apiService
-      .getRequest<FriendRequest[]>('relations')
-      .pipe(tap((requests) => this.requestsList.set(requests)));
+    return this.apiService.getRequest<FriendRequest[]>('relations').pipe(
+      tap((requests) => {
+        const userId = this.authService.userInformation()?.id as string;
+        console.log(userId);
+        const userRequests = requests.filter(
+          (request) => request.senderId === Number(userId),
+        );
+        this.requestsList.set(userRequests);
+      }),
+    );
   }
 }

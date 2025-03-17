@@ -23,6 +23,7 @@ import { NotifierService } from '../../core/services/notifier.service';
 export const CommunityScreens = {
   users: 'users',
   groups: 'groups',
+  requests: 'requests',
 } as const;
 
 @Component({
@@ -53,13 +54,16 @@ export class CommunityComponent implements OnInit {
   protected users = this.communityService.filteredUsers;
   protected groups = this.communityService.groupsList;
   protected requests = signal([]);
-
   protected readonly event = event;
 
   constructor() {
     effect(() => {
       if (this.communityService.friendRequestSent()) {
         this.notifierService.showSuccessMessage('Friend request sent', 'Sent!');
+        this.communityService
+          .getSentRequests()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe();
         this.communityService.friendRequestSent.set(false);
       }
     });
@@ -103,7 +107,6 @@ export class CommunityComponent implements OnInit {
   }
 
   isRequestSent(userId: string): boolean {
-    console.log();
     return this.communityService
       .requestsList()
       .map((request) => request.receiverId)
