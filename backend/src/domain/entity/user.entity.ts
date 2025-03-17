@@ -9,6 +9,7 @@ import {
 import { MixinsCrudEntity } from 'nestjs-crud-mixins';
 import { GroupEntity } from './group.entity';
 import { FriendRequestEntity } from './friend-request.entity';
+import { NotificationEntity } from './notification.entity';
 
 @Entity('users')
 export class UserEntity extends MixinsCrudEntity {
@@ -59,4 +60,8 @@ export class UserEntity extends MixinsCrudEntity {
     inverseJoinColumn: { name: 'contactId', referencedColumnName: 'id' },
   })
   contacts: UserEntity[];
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  @OneToMany(() => NotificationEntity, (notifcation) => notifcation.user)
+  notifications: NotificationEntity[];
 }

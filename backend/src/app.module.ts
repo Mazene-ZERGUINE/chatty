@@ -21,6 +21,11 @@ import { PassportModule } from '@nestjs/passport';
 import { RelationsController } from './api/controller/relations.controller';
 import { RelationsService } from './application/service/relations.service';
 import { FriendRequestEntity } from './domain/entity/friend-request.entity';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { FriendRequestListener } from './application/event/friend-request.listener';
+import { NotificationEntity } from './domain/entity/notification.entity';
+import { NotificationGateway } from './api/gateway/notification.gateway';
+import { NotificationService } from './application/service/notification.service';
 
 @Module({
   imports: [
@@ -35,7 +40,12 @@ import { FriendRequestEntity } from './domain/entity/friend-request.entity';
       inject: [ConfigService],
       useFactory: createTypeOrmConfig,
     }),
-    TypeOrmModule.forFeature([UserEntity, GroupEntity, FriendRequestEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      GroupEntity,
+      FriendRequestEntity,
+      NotificationEntity,
+    ]),
     // MongoDb configurations
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -48,6 +58,7 @@ import { FriendRequestEntity } from './domain/entity/friend-request.entity';
       inject: [ConfigService],
       useFactory: createThrottler,
     }),
+    EventEmitterModule.forRoot(),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -67,6 +78,9 @@ import { FriendRequestEntity } from './domain/entity/friend-request.entity';
     RelationsController,
   ],
   providers: [
+    NotificationService,
+    NotificationGateway,
+    FriendRequestListener,
     RelationsService,
     GroupService,
     UserService,
