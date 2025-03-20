@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MessagesListComponent } from '../../shared/components/messages-list/messages-list.component';
 import { SideBarMenuComponent } from '../../core/layout/side-bar-menu/side-bar-menu.component';
-import { TopBarComponent } from '../../shared/components/top-bar/top-bar.component';
+import { TopBarComponent } from '../../core/layout/top-bar/top-bar.component';
 import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommunityService } from './community.service';
