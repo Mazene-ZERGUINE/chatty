@@ -1,9 +1,10 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { NotificationType } from '../enum/notification-type.enum';
 import { UserEntity } from './user.entity';
+import { MixinsCrudEntity } from 'nestjs-crud-mixins';
 
 @Entity('notification')
-export class NotificationEntity {
+export class NotificationEntity extends MixinsCrudEntity {
   @PrimaryGeneratedColumn('identity')
   id: number;
 

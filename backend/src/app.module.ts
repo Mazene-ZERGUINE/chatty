@@ -26,6 +26,7 @@ import { FriendRequestListener } from './application/event/friend-request.listen
 import { NotificationEntity } from './domain/entity/notification.entity';
 import { NotificationGateway } from './api/gateway/notification.gateway';
 import { NotificationService } from './application/service/notification.service';
+import { NotificationController } from './api/controller/notification.controller';
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { NotificationService } from './application/service/notification.service'
     }),
   ],
   controllers: [
+    NotificationController,
     AuthController,
     UserController,
     GroupController,

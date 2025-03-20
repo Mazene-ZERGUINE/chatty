@@ -3,7 +3,10 @@ import { MixinsCrudService } from 'nestjs-crud-mixins';
 import { FriendRequestEntity } from '../../domain/entity/friend-request.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FriendRequestDto } from '../dto/request/friend-request.dto';
+import {
+  CreateFriendRequestDto,
+  FriendRequestDto,
+} from '../dto/request/friend-request.dto';
 import { UserEntity } from '../../domain/entity/user.entity';
 import { FriendRequestStatus } from '../../domain/enum/friend-request-status.enum';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -22,7 +25,7 @@ export class RelationsService extends MixinsCrudService<FriendRequestEntity> {
   }
 
   async registerFriendRequest(
-    friendRequestDto: FriendRequestDto,
+    friendRequestDto: CreateFriendRequestDto,
   ): Promise<FriendRequestDto> {
     const sender = await this.usersRepository.findOneBy({
       id: friendRequestDto.senderId,

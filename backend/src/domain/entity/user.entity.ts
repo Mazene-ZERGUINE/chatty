@@ -64,4 +64,9 @@ export class UserEntity extends MixinsCrudEntity {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   @OneToMany(() => NotificationEntity, (notifcation) => notifcation.user)
   notifications: NotificationEntity[];
+
+  constructor() {
+    super();
+    this.setRelations(['notifications']);
+  }
 }

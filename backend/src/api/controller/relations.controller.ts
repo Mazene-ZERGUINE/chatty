@@ -8,10 +8,11 @@ import { FriendRequestEntity } from '../../domain/entity/friend-request.entity';
 import { RelationsService } from '../../application/service/relations.service';
 import {
   CreateFriendRequestDto,
+  FriendRequestDetailsDto,
   FriendRequestDto,
 } from '../../application/dto/request/friend-request.dto';
 
-@ResponseDto(FriendRequestDto)
+@ResponseDto(FriendRequestDetailsDto)
 @CreateDto(CreateFriendRequestDto)
 @Controller('relations')
 export class RelationsController extends MixinsCrudController<
@@ -24,6 +25,7 @@ export class RelationsController extends MixinsCrudController<
 
   @Post('')
   @HttpCode(HttpStatus.CREATED)
+  @ResponseDto(FriendRequestDto)
   async create(
     @Body() createDto: InstanceType<ReturnType<this['getCreateDto']>>,
   ): Promise<FriendRequestDto> {
