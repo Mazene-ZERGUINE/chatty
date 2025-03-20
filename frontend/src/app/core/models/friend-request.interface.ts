@@ -1,8 +1,10 @@
+import { User } from './user.interface';
+
 export interface FriendRequest {
   id: number;
   requestStatus: FriendRequestStatus;
-  senderId: number;
-  receiverId: number;
+  sender: User;
+  receiver: User;
 }
 
 export enum FriendRequestStatus {

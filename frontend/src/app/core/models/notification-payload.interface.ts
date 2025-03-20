@@ -1,9 +1,11 @@
+import { User } from './user.interface';
+
 export interface NotificationPayload {
   id: number;
   content: string;
-  type: NotificationType;
-  senderId: number;
-  userId: number;
+  notificationType: NotificationType;
+  sender: User;
+  user: User;
 }
 
 export enum NotificationType {

@@ -23,7 +23,8 @@ export class CommunityService {
   usersList: WritableSignal<User[]> = signal([]);
   searchValue: WritableSignal<string> = signal<string>('');
   friendRequestSent = signal(false);
-  requestsList: WritableSignal<FriendRequest[]> = signal([]);
+  sentRequests: WritableSignal<FriendRequest[]> = signal([]);
+  receivedRequests: WritableSignal<FriendRequest[]> = signal([]);
 
   filteredUsers: Signal<User[]> = computed(() => {
     const term = this.searchValue().toLowerCase();
@@ -71,11 +72,14 @@ export class CommunityService {
     return this.apiService.getRequest<FriendRequest[]>('relations').pipe(
       tap((requests) => {
         const userId = this.authService.userInformation()?.id as string;
-        console.log(userId);
-        const userRequests = requests.filter(
-          (request) => request.senderId === Number(userId),
+        const sentRequests = requests.filter(
+          (request) => request.sender.id === userId,
         );
-        this.requestsList.set(userRequests);
+        this.sentRequests.set(sentRequests);
+        const receivedRequests = requests.filter(
+          (request) => request.receiver.id === userId,
+        );
+        this.receivedRequests.set(receivedRequests);
       }),
     );
   }

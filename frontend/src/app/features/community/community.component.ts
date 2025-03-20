@@ -1,11 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { MessagesListComponent } from '../../shared/components/messages-list/messages-list.component';
 import { SideBarMenuComponent } from '../../core/layout/side-bar-menu/side-bar-menu.component';
 import { TopBarComponent } from '../../core/layout/top-bar/top-bar.component';
@@ -13,7 +6,7 @@ import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommunityService } from './community.service';
 
-import { NgClass } from '@angular/common';
+import { JsonPipe, NgClass, UpperCasePipe } from '@angular/common';
 import { UserCardComponent } from './user-card/user-card.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { UserInfoCardComponent } from '../../shared/components/user-info-card/user-info-card.component';
@@ -37,6 +30,8 @@ export const CommunityScreens = {
     UserCardComponent,
     SearchBarComponent,
     UserInfoCardComponent,
+    JsonPipe,
+    UpperCasePipe,
   ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss',
@@ -53,7 +48,7 @@ export class CommunityComponent implements OnInit {
 
   protected users = this.communityService.filteredUsers;
   protected groups = this.communityService.groupsList;
-  protected requests = signal([]);
+  protected readonly friendRequests = this.communityService.receivedRequests;
   protected readonly event = event;
 
   constructor() {
@@ -108,9 +103,9 @@ export class CommunityComponent implements OnInit {
 
   isRequestSent(userId: string): boolean {
     return this.communityService
-      .requestsList()
-      .map((request) => request.receiverId)
-      .includes(Number(userId));
+      .sentRequests()
+      .map((request) => request.receiver.id)
+      .includes(userId);
   }
 
   private loadData(): void {

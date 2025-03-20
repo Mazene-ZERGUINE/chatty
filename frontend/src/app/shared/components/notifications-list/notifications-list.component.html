@@ -1,0 +1,35 @@
+<div class="w-0 h-0 border-l-[12px] border-l-transparent border-b-[24px] border-b-white border-r-[12px] relative left-[92%] border-r-transparent"></div>
+<div class="w-[400px] relative left-8 max-h-[600px] bg-white z-50 rounded-md shadow-xl box-border overflow-hidden ">
+
+  <div class="w-full  flex flex-col">
+      <div class="w-full h-[5%] flex justify-between p-4">
+          <p class="text-sm text-highlightDarkSecondary font-bold cursor-pointer hover:underline">Mark all as read</p>
+          <p class="text-sm text-red-700 font-bold  cursor-pointer hover:underline">Delete all</p>
+      </div>
+
+    <div class="max-h-[550px] p-4 w-full flex flex-col space-y-3 overflow-y-auto ">
+      @for (item of notification() ; track item)
+      {
+        <div class="w-full h-32 bg-bgLightSecondary rounded-md">
+          @if (item.notificationType === NotificationType.REQUEST_NOTIFICATION)
+          {
+            <div class="flex flex-col">
+              <div class="flex flex-row p-4">
+                <img class="rounded-full h-12 w-12" [src]="item.sender.avatarUrl">
+                <div class="flex flex-col">
+                  <p class="text-sm text-darkMain px-2 font-bold">New request</p>
+                  <p class="px-2 text-xs text-gray-400">You have received a new friend request from {{ item.sender.firstName + ' ' + item.sender.lastName | uppercase }}</p>
+                </div>
+              </div>
+              <div class="flex flex-row justify-end space-x-3 -left-4 relative -top-2">
+                  <button class="p-2 w-fit bg-blue-600 text-white rounded-md text-xs">Accept</button>
+                <button class="p-2 w-fit bg-red-600 text-white rounded text-xs">Decline</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

@@ -11,12 +11,14 @@ import { AuthService } from '../../auth/auth.service';
 import { switchMap } from 'rxjs';
 import { User } from '../../models/user.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NotificationsListComponent } from '../../../shared/components/notifications-list/notifications-list.component';
 
 @Component({
   selector: 'app-top-bar',
   standalone: true,
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
+  imports: [NotificationsListComponent],
 })
 export class TopBarComponent implements OnDestroy {
   protected readonly notificationService = inject(NotificationService);
@@ -28,6 +30,8 @@ export class TopBarComponent implements OnDestroy {
 
   protected notificationNumber: WritableSignal<number> =
     this.notificationService.notificationNumber;
+
+  protected notificationsDisplayed = false;
 
   private userId?: string;
 
@@ -55,5 +59,9 @@ export class TopBarComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.notificationService.disconnect();
+  }
+
+  displayNotificationList(): void {
+    this.notificationsDisplayed = !this.notificationsDisplayed;
   }
 }

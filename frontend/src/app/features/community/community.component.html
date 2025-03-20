@@ -30,13 +30,12 @@
                 class="p-2 text-sm rounded-full cursor-pointer transition-all duration-300"
               >Friend requests</p>
             </div>
-
-
           </div>
-
-          <div class="w-full mb-4">
-            <app-search-bar (searchChange)="filterUsers($event)" />
-          </div>
+          @if (currentScreen !== 'requests') {
+            <div class="w-full mb-4 -z-20">
+              <app-search-bar (searchChange)="filterUsers($event)" />
+            </div>
+          }
           @if (currentScreen === 'users') {
             <div
               [ngClass]="displayInfoScreen ? 'lg:grid-cols-3' : 'lg:grid-cols-4'"
@@ -58,7 +57,53 @@
           } @else if(currentScreen === 'groups') {
             <p>Groups screen</p>
           } @else {
-            <p>Requests screen</p>
+            <div class="flex flex-col max-h-[50%] ">
+              <div class="text-xl font-bold text-darkMain mt-4 mb-2">
+                Sent requests
+              </div>
+              <div class="overflow-y-auto max-h-[50%]">
+                @for (request of communityService.sentRequests(); track request)
+                {
+                  <div class="flex justify-between bg-bgLightSecondary rounded-md mb-3">
+                    <div class="flex flex-row p-4">
+                      <img class="rounded-full h-12 w-12" [src]="request.receiver.avatarUrl">
+                      <div class="flex flex-col">
+                        <p class="text-sm text-darkMain px-2 font-bold">Sent request</p>
+                        <p class="px-2 text-xs text-gray-400">You have sent a friend request to {{ request.receiver.firstName + ' ' + request.receiver.lastName | uppercase }}</p>
+                      </div>
+                    </div>
+                    <div class="flex flex-row justify-end space-x-3 h-fit p-4">
+                      <button class="p-2 w-fit bg-red-600 text-white rounded text-xs relative ">Cancel</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="flex flex-col max-h-[50%]">
+              <div class="text-xl font-bold text-darkMain mt-4 mb-2">
+                Received Requests
+              </div>
+              <div class="max-h-[50%] overflow-y-auto">
+                @for (request of communityService.receivedRequests(); track request)
+                {
+                  <div class="flex justify-between bg-bgLightSecondary rounded-md mb-3">
+                    <div class="flex flex-row p-4">
+                      <img class="rounded-full h-12 w-12" [src]="request.sender.avatarUrl">
+                      <div class="flex flex-col">
+                        <p class="text-sm text-darkMain px-2 font-bold">Sent request</p>
+                        <p class="px-2 text-xs text-gray-400">You have received  a new  friend request from {{ request.sender.firstName + ' ' + request.sender.lastName | uppercase }}</p>
+                      </div>
+                    </div>
+                    <div class="flex flex-row justify-end space-x-3 h-fit p-4">
+                      <button class="p-2 w-fit bg-blue-600 text-white rounded text-xs relative ">Accept</button>
+                      <button class="p-2 w-fit bg-red-600 text-white rounded text-xs relative ">Decline</button>
+                    </div>
+                  </div>
+                }
+              </div>
+
+            </div>
           }
         </div>
 

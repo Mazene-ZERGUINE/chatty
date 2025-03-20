@@ -89,7 +89,7 @@ export class NotificationService {
 
   private showPushNotification(notification: NotificationPayload): void {
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(notification.type, {
+      new Notification(notification.notificationType, {
         body: notification.content,
       });
     }
