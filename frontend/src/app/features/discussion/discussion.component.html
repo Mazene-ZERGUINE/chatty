@@ -1,0 +1,43 @@
+<div class="flex flex-col h-full w-full max-w-full bg-white border-l border-gray-200">
+
+
+  <!-- Message List -->
+  <div class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
+    <!-- Incoming -->
+    <div class="flex items-start space-x-3">
+      <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">JD</div>
+      <div class="bg-white p-4 rounded-lg shadow text-sm max-w-lg">
+        Hey! How can I help you today?
+      </div>
+    </div>
+
+    <!-- Outgoing -->
+    <div class="flex items-start space-x-3 justify-end">
+      <div class="bg-blue-500 text-white p-4 rounded-lg shadow text-sm max-w-lg">
+        I had a question about my recent message.
+      </div>
+    </div>
+
+    <!-- Incoming -->
+    <div class="flex items-start space-x-3">
+      <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">JD</div>
+      <div class="bg-white p-4 rounded-lg shadow text-sm max-w-lg">
+        Let me check and get back to you.
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Input -->
+  <div class="p-4 border-t bg-bgLightSecondary border-l border-l-gray-400/50">
+    <form class="flex items-center space-x-3">
+      <input type="text" placeholder="Type a message..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>

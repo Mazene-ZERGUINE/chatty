@@ -26,4 +26,10 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'home/discussion/:contactId',
+    loadComponent: () =>
+      import('./features/home/home.component').then((m) => m.HomeComponent),
+    canActivate: [AuthGuard],
+  },
 ];

@@ -14,4 +14,6 @@ export interface User {
   isActive: boolean;
 
   avatarUrl: string;
+
+  contacts: User[];
 }

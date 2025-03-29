@@ -67,6 +67,6 @@ export class UserEntity extends MixinsCrudEntity {
 
   constructor() {
     super();
-    this.setRelations(['notifications']);
+    this.setRelations(['notifications', 'contacts']);
   }
 }

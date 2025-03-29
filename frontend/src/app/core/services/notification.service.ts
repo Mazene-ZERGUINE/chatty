@@ -6,7 +6,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, shareReplay, switchMap, tap } from 'rxjs';
 import { NotificationPayload } from '../models/notification-payload.interface';
 import { AuthService } from '../auth/auth.service';
 import { io, Socket } from 'socket.io-client';
@@ -57,10 +57,10 @@ export class NotificationService {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         tap((result) => {
-          console.log(result);
           this.notificationsList.set(result);
           this.updateNotificationCount();
         }),
+        shareReplay({ bufferSize: 1, refCount: true }),
       );
   }
 
