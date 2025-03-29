@@ -6,6 +6,7 @@ export interface NotificationPayload {
   notificationType: NotificationType;
   sender: User;
   user: User;
+  requestId: number;
 }
 
 export enum NotificationType {

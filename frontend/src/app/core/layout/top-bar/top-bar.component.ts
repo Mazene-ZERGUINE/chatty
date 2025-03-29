@@ -25,9 +25,6 @@ export class TopBarComponent implements OnDestroy {
   protected readonly authService = inject(AuthService);
   protected readonly destroyRef = inject(DestroyRef);
 
-  protected readonly notificationList =
-    this.notificationService.notificationsList;
-
   protected notificationNumber: WritableSignal<number> =
     this.notificationService.notificationNumber;
 
@@ -38,7 +35,6 @@ export class TopBarComponent implements OnDestroy {
   constructor() {
     effect(() => {
       const cachedUser = this.authService.userInformation();
-
       if (cachedUser?.id) {
         this.userId = cachedUser.id;
         this.notificationService.getNotifications$(this.userId).subscribe();

@@ -6,7 +6,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { NotificationPayload } from '../models/notification-payload.interface';
 import { AuthService } from '../auth/auth.service';
 import { io, Socket } from 'socket.io-client';
@@ -24,6 +24,8 @@ export class NotificationService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly apiService = inject(ApiService);
 
+  private userId!: string;
+
   private socket!: Socket;
 
   constructor() {
@@ -33,12 +35,16 @@ export class NotificationService {
       const userId = this.authService.userInformation()?.id;
       if (userId) {
         this.connect(userId);
+        this.userId = userId;
       } else {
         this.authService
           .getUserInformation$()
           .pipe(
             takeUntilDestroyed(this.destroyRef),
-            tap((user) => this.connect(user.id)),
+            tap((user) => {
+              this.connect(user.id);
+              this.userId = user.id;
+            }),
           )
           .subscribe();
       }
@@ -51,10 +57,27 @@ export class NotificationService {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         tap((result) => {
+          console.log(result);
           this.notificationsList.set(result);
           this.updateNotificationCount();
         }),
       );
+  }
+
+  refreshNotifications$(
+    notificationId: number,
+  ): Observable<NotificationPayload[]> {
+    return this.apiService
+      .getRequest<void>('notifications/view/' + notificationId)
+      .pipe(switchMap(() => this.getNotifications$(this.userId)));
+  }
+
+  markNotificationAsRead$(
+    notificationId: number,
+  ): Observable<NotificationPayload[]> {
+    return this.apiService
+      .deleteRequest('notifications/' + notificationId)
+      .pipe(switchMap(() => this.getNotifications$(this.userId)));
   }
 
   disconnect(): void {
@@ -69,8 +92,7 @@ export class NotificationService {
     });
 
     this.socket.on('new_notification', (notification: NotificationPayload) => {
-      console.log('New notification received:', notification);
-      this.notificationsList.update((prev) => [notification, ...prev]);
+      this.getNotifications$(userId).subscribe();
       this.updateNotificationCount();
 
       this.showPushNotification(notification);

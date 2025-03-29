@@ -1,4 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   CreateDto,
   MixinsCrudController,
@@ -30,5 +39,14 @@ export class RelationsController extends MixinsCrudController<
     @Body() createDto: InstanceType<ReturnType<this['getCreateDto']>>,
   ): Promise<FriendRequestDto> {
     return this.relationsService.registerFriendRequest(createDto);
+  }
+
+  @Get(':id/validate')
+  @HttpCode(HttpStatus.OK)
+  async validateFriendRequest(
+    @Param('id') id: number,
+    @Query() action: { accpet: boolean },
+  ): Promise<boolean> {
+    return await this.relationsService.handelFriendRequest(id, action.accpet);
   }
 }

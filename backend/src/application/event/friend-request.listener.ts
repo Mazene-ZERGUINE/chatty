@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { FriendRequestSentEvent } from '../../domain/event/frient-request-sent.envent';
 import { NotificationEntity } from '../../domain/entity/notification.entity';
 import { NotificationType } from '../../domain/enum/notification-type.enum';
+import { RequestAnsweredEvent } from '../../domain/event/request-answerd.event';
 
 @Injectable()
 export class FriendRequestListener implements OnModuleInit {
@@ -23,8 +24,9 @@ export class FriendRequestListener implements OnModuleInit {
     const notification = this.notificationRepository.create({
       user: { id: event.receiverId },
       sender: { id: event.senderId },
+      requestId: event.requestId,
       title: 'New friend request',
-      content: 'You have received a new friend request',
+      content: event.message,
       notificationType: NotificationType.REQUEST_NOTIFICATION,
     });
 
@@ -33,6 +35,26 @@ export class FriendRequestListener implements OnModuleInit {
     this.eventEmitter.emit('notification.created', {
       receiverId: event.receiverId,
       senderId: event.senderId,
+      notification,
+    });
+  }
+
+  @OnEvent('request.answered')
+  async handelRequestAnswer(event: RequestAnsweredEvent): Promise<void> {
+    await this.notificationRepository.delete(event.requestId);
+
+    const notification = this.notificationRepository.create({
+      user: { id: event.userId },
+      sender: { id: event.receiverId },
+      requestId: event.requestId,
+      title: 'Friend Request Answered',
+      content: event.message,
+      notificationType: NotificationType.SYSTEME_NOTIFICATION,
+    });
+    await this.notificationRepository.save(notification);
+
+    this.eventEmitter.emit('notification.created', {
+      receiverId: event.userId,
       notification,
     });
   }

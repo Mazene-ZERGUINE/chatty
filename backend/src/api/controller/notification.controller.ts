@@ -28,4 +28,10 @@ export class NotificationController extends MixinsCrudController<
   ): Promise<NotificationEntity[]> {
     return this.notificationService.getUsersNotifications(id);
   }
+
+  @Get('view/:id')
+  @HttpCode(HttpStatus.OK)
+  async viewNotification(@Param('id') id: number): Promise<void> {
+    await this.notificationService.setNotificationToRead(id);
+  }
 }

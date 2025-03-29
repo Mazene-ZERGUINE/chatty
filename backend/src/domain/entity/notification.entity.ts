@@ -16,6 +16,9 @@ export class NotificationEntity extends MixinsCrudEntity {
   @ManyToOne(() => UserEntity, (user) => user.notifications)
   user: UserEntity;
 
+  @Column({ type: 'integer', unique: false, nullable: true })
+  requestId: number;
+
   @Column({ type: 'boolean', default: false })
   isRead: boolean;
 

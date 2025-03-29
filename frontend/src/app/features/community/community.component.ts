@@ -6,7 +6,7 @@ import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommunityService } from './community.service';
 
-import { JsonPipe, NgClass, UpperCasePipe } from '@angular/common';
+import { NgClass, UpperCasePipe } from '@angular/common';
 import { UserCardComponent } from './user-card/user-card.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { UserInfoCardComponent } from '../../shared/components/user-info-card/user-info-card.component';
@@ -30,7 +30,6 @@ export const CommunityScreens = {
     UserCardComponent,
     SearchBarComponent,
     UserInfoCardComponent,
-    JsonPipe,
     UpperCasePipe,
   ],
   templateUrl: './community.component.html',

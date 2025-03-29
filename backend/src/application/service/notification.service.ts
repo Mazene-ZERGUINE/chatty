@@ -20,9 +20,10 @@ export class NotificationService extends MixinsCrudService<NotificationEntity> {
   @OnEvent('notification.created')
   async handleNotificationCreated(event: {
     receiverId: number;
-    senderId: number;
+    senderId?: number;
     notification: NotificationSocketDto;
   }): Promise<void> {
+    console.log(event.notification);
     this.notificationGateway.sendNotification(String(event.receiverId), {
       id: event.notification.id,
       content: event.notification.content,
@@ -32,15 +33,21 @@ export class NotificationService extends MixinsCrudService<NotificationEntity> {
   }
 
   async getUsersNotifications(id: number): Promise<NotificationEntity[]> {
+    return await this.notificationRepository.find({
+      where: { user: { id: id }, isRead: false },
+      relations: ['user', 'sender'],
+    });
+  }
+
+  async setNotificationToRead(notificationId: number): Promise<void> {
     try {
-      await this.notificationRepository.findOneByOrFail({ id: id });
-      return await this.notificationRepository.find({
-        where: { user: { id: id } },
-        relations: ['user', 'sender'],
+      const notification = await this.notificationRepository.findOneByOrFail({
+        id: notificationId,
       });
+      notification.isRead = true;
+      await this.notificationRepository.save(notification);
     } catch (error) {
-      console.error('User not found', error);
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException('Could not find notification');
     }
   }
 }

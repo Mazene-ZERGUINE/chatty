@@ -10,7 +10,10 @@ import { ApiService } from '../../core/services/api.service';
 import { Observable, tap } from 'rxjs';
 import { Group } from '../../core/models/group.interface';
 import { User } from '../../core/models/user.interface';
-import { FriendRequest } from '../../core/models/friend-request.interface';
+import {
+  FriendRequest,
+  FriendRequestStatus,
+} from '../../core/models/friend-request.interface';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Injectable({
@@ -73,7 +76,9 @@ export class CommunityService {
       tap((requests) => {
         const userId = this.authService.userInformation()?.id as string;
         const sentRequests = requests.filter(
-          (request) => request.sender.id === userId,
+          (request) =>
+            request.sender.id === userId &&
+            request.requestStatus === FriendRequestStatus.PENDING,
         );
         this.sentRequests.set(sentRequests);
         const receivedRequests = requests.filter(
