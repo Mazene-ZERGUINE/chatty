@@ -27,6 +27,10 @@ import { NotificationEntity } from './domain/entity/notification.entity';
 import { NotificationGateway } from './api/gateway/notification.gateway';
 import { NotificationService } from './application/service/notification.service';
 import { NotificationController } from './api/controller/notification.controller';
+import { ChatController } from './api/controller/chat.controller';
+import { ChatService } from './application/service/chat.service';
+import { Message, MessageSchema } from './domain/entity/message.schema';
+import { ChatGateway } from './api/gateway/messages.gateway';
 
 @Module({
   imports: [
@@ -53,6 +57,7 @@ import { NotificationController } from './api/controller/notification.controller
       inject: [ConfigService],
       useFactory: createMongooseConfig,
     }),
+    MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
     // Throttler
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
@@ -78,6 +83,7 @@ import { NotificationController } from './api/controller/notification.controller
     UserController,
     GroupController,
     RelationsController,
+    ChatController,
   ],
   providers: [
     NotificationService,
@@ -86,9 +92,11 @@ import { NotificationController } from './api/controller/notification.controller
     RelationsService,
     GroupService,
     UserService,
+    ChatService,
     AuthService,
     TokenService,
     JwtStrategy,
+    ChatGateway,
   ],
 })
 export class AppModule {}

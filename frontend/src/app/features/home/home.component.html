@@ -1,12 +1,13 @@
-<div class="w-screen h-screen flex">
+<div class="w-screen h-screen flex overflow-hidden">
   <app-side-bar-menu />
   <div class="flex flex-row w-full h-full">
       <app-messages-list />
 
       <div class="flex flex-col w-full h-full">
+
         <app-top-bar [contactId]="contactId" />
 
-          <div class="h-full w-full">
+          <div class="h-[92%] w-full">
             <app-discussion (contactIdEvent)="setContactId($event)"  />
           </div>
 

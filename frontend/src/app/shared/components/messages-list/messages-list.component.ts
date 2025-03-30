@@ -31,7 +31,7 @@ export class MessagesListComponent implements OnInit {
     this.messageListService
       .getUserContact$()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+      .subscribe(console.log);
   }
 
   onFragmentChange(fragment: MessageListFragment): void {

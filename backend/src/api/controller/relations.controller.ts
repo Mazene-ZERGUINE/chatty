@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   CreateDto,
@@ -20,7 +21,9 @@ import {
   FriendRequestDetailsDto,
   FriendRequestDto,
 } from '../../application/dto/request/friend-request.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @ResponseDto(FriendRequestDetailsDto)
 @CreateDto(CreateFriendRequestDto)
 @Controller('relations')
