@@ -1,7 +1,7 @@
 // chat-socket.service.ts
 import { inject, Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Message } from '../../../core/models/message.interface';
 
@@ -9,11 +9,11 @@ import { Message } from '../../../core/models/message.interface';
   providedIn: 'root',
 })
 export class ChatSocketService {
+  readonly authService = inject(AuthService);
   userId = this.authService.userInformation()?.id;
 
   private socket: Socket;
-  private messagesSubject = new BehaviorSubject<Message[]>(null);
-  private readonly authService = inject(AuthService);
+  private messagesSubject = new BehaviorSubject<Message[]>([]);
 
   constructor() {
     if (!this.userId) {
@@ -49,7 +49,7 @@ export class ChatSocketService {
     this.socket.emit('sendMessage', message);
   }
 
-  listenForMessages(): void {
+  listenForMessages(): Observable<Message[]> {
     return this.messagesSubject.asObservable();
   }
 }
